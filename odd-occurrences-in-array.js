@@ -56,8 +56,8 @@
 //   return oddElement;
 // }
 
-let elementArray = [1, 5, 6, 5, 1, 6, 7];
-solution(elementArray);
+// let elementArray = [1, 5, 6, 5, 1, 6, 7];
+// solution(elementArray);
 
 // MORE EFFICIENT SOLUTION
 
