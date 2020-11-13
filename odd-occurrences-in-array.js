@@ -29,27 +29,54 @@
 // each element of array A is an integer within the range[1..1, 000, 000, 000];
 // all but one of the values in A occur an even number of times.
 
+// KAK SOLUTION - FAILED TEST DUE TO INEFFICIENCY
+
+// function solution(A) {
+
+//   // A is an array containing an odd number of integers
+
+//   let oddElement = 0;
+
+//   // Loop through array and check for elements that can be paired
+//   A.forEach(element => {
+//     let occurrences = 0;
+
+//     // Nested for loop?
+//     for (let i = 0; i < A.length; i++) {
+//       if (element === A[i]) {
+//         occurrences++;
+//       }
+//     }
+
+//     if (occurrences === 1) {
+//       oddElement = element;
+//     }
+//   });
+
+//   return oddElement;
+// }
+
+let elementArray = [1, 5, 6, 5, 1, 6, 7];
+solution(elementArray);
+
+// MORE EFFICIENT SOLUTION
+
 function solution(A) {
+  // write your code in JavaScript (Node.js 8.9.4)
+  const sortedArray = A.sort();
 
-  // A is an array containing an odd number of integers
+  let oddElement;
 
-  let oddElement = 0;
+  for (let i = 0; i < sortedArray.length; i++) {
+    const currentElement = sortedArray[i];
+    const nextElement = sortedArray[i + 1];
 
-  // Loop through array and check for elements that can be paired
-  A.forEach(element => {
-    let occurrences = 0;
-
-    // Nested for loop?
-    for (let i = 0; i < A.length; i++) {
-      if (element === A[i]) {
-        occurrences++;
-      }
+    if (currentElement === nextElement) {
+      i++;
+    } else {
+      oddElement = currentElement;
     }
-
-    if (occurrences === 1) {
-      oddElement = element;
-    }
-  });
+  }
 
   return oddElement;
 }
