@@ -40,6 +40,7 @@
 // each element of array A is an integer within the range[−1, 000..1, 000].
 
 // P has to be less than N for this to work
+// 53% score, not efficient enough
 function solution(A) {
 
   // Let's try it my way first
@@ -69,6 +70,28 @@ function solution(A) {
   // We use the ... here to tell the Math.min function that the argument is an array
   return Math.min(...diffArray);
 
+}
+
+solution([3, 1, 2, 4, 3]);
+
+// More efficient solution
+function solution(A) {
+  let summedArray = A.reduce((total, number) => total + number, 0);
+  let minimum = Number.POSITIVE_INFINITY;
+  let cumulitiveSum = 0;
+
+  for (let i = 0; i < A.length - 1; i++) {
+    cumulitiveSum = cumulitiveSum + A[i];
+    summedArray = summedArray - A[i];
+
+    let difference = Math.abs(summedArray - cumulitiveSum);
+
+    if (difference < minimum) {
+      minimum = difference;
+    }
+
+    return minimum;
+  }
 }
 
 solution([3, 1, 2, 4, 3]);
