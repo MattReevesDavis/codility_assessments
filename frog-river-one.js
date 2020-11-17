@@ -41,54 +41,112 @@
 // N and X are integers within the range [1..100,000];
 // each element of array A is an integer within the range [1..X].
 
+// function solution(X, A) {
+//     // X is the position of the opposite river bank
+//     // A is an array of N integers representing fallen leaves
+//     // Write an algorithm that returns the earliest time (index of A = seconds) the frog can jump onto the opposite bank
+
+//     // Either we assume the starting leaf will be 1 or we isolate the lowest integer in A
+//     // This step probably isn't necessary
+//     // Not necessary at all
+//     // let firstLeaf = Math.min(...A);
+
+//     // Now we can use a couple of flags to check if X is found and if previous leaves have already fallen
+//     let xFound = false;
+//     let leafCount = 0;
+//     let earliestTimeToJump = 0;
+
+//     for (let i = 0; i < A.length; i++) {
+//         // Probably a bloated if statement coming up
+//         // Check if X is encountered
+//         if (A[i] === X) {
+//             xFound = true;
+//         }
+
+//         // Check if all leaves have fallen
+//         // So we check if all leaves are present before X is encountered
+//         if (A[i] < (X - 1) && !xFound) {
+//             // console.log(firstLeaf);
+//             // Idea here is that leafCount should never be more than X - 1, that's why we implement this check
+//             if (leafCount < (X - 1)) {
+//                 leafCount++;
+//             }
+//         }
+
+//         // Now we just check if leafCount = X - 1 and if xFound is true
+//         // If so, return i, if not return -1 because the jump can't happen
+//         if (leafCount === (X - 1) && xFound) {
+//             earliestTimeToJump = i;
+//         } else if (leafCount < (X - 1) && xFound) {
+//             earliestTimeToJump = -1;
+//         } else if (i === (A.length - 1) && !xFound) {
+//             earliestTimeToJump = -1;
+//         }
+
+//         // Break out of the loop as soon as one of our conditions are met
+//         if (earliestTimeToJump !== 0) {
+//             break;
+//         }
+//     }
+
+//     // return earliestTimeToJump;
+//     console.log(earliestTimeToJump);
+// }
+
+// solution(5, [1, 3, 1, 4, 2, 3, 5, 4]);
+// solution(5, [3]);
+
+// More efficient and correct solution number 1
+// function solution(X, A) {
+//     let sequence = [0];
+//     let position = -1;
+//     let count = 0;
+
+//     if (X === 1 && A[0] === 1) {
+//         return 0;
+//     }
+
+//     for (let i = 0; i <= A.length; i++) {
+//         if (A[i] <= X) {
+//             // Check if the sequence has been counted
+//             if (!sequence[A[i]]) {
+//                 count++;
+//             }
+
+//             // Now add it to the sequence array so it doesn't get counted again
+//             sequence[A[i]] = A[i];
+
+//             if (count === X) {
+//                 // Means we have a valid sequence leading up to X
+//                 position = i;
+//                 break;
+//             }
+//         }
+//     }
+
+//     // return position;
+//     console.log(position);
+// }
+
+// solution(5, [1, 3, 1, 4, 2, 3, 5, 4]);
+
+// Another better solution
 function solution(X, A) {
-    // X is the position of the opposite river bank
-    // A is an array of N integers representing fallen leaves
-    // Write an algorithm that returns the earliest time (index of A = seconds) the frog can jump onto the opposite bank
 
-    // Either we assume the starting leaf will be 1 or we isolate the lowest integer in A
-    // This step probably isn't necessary
-    // Not necessary at all
-    // let firstLeaf = Math.min(...A);
-
-    // Now we can use a couple of flags to check if X is found and if previous leaves have already fallen
-    let xFound = false;
-    let leafCount = 0;
-    let earliestTimeToJump = 0;
+    // We use a Set which is an object that holds a UNIQUE collection of values
+    // So we simply loop through the A array and add the values to the Set which will remove duplication
+    // This way you can simply check if you have a sequence leading up to X by checking the size of the Set
+    // Imagine this is something we knew about
+    let setValues = new Set();
 
     for (let i = 0; i < A.length; i++) {
-        // Probably a bloated if statement coming up
-        // Check if X is encountered
-        if (A[i] === X) {
-            xFound = true;
-        }
+        setValues.add(A[i]);
 
-        // Check if all leaves have fallen
-        // So we check if all leaves are present before X is encountered
-        if (A[i] < (X - 1) && !xFound) {
-            // console.log(firstLeaf);
-            // Idea here is that leafCount should never be more than X - 1, that's why we implement this check
-            if (leafCount < (X - 1)) {
-                leafCount++;
-            }
-        }
-
-        // Now we just check if leafCount = X - 1 and if xFound is true
-        // If so, return i, if not return -1 because the jump can't happen
-        if (leafCount === (X - 1) && xFound) {
-            earliestTimeToJump = i;
-        } else if (leafCount < (X - 1) && xFound) {
-            earliestTimeToJump = -1;
-        }
-
-        // Break out of the loop as soon as one of our conditions are met
-        if (earliestTimeToJump !== 0) {
-            break;
+        if (setValues.size === X) {
+            return i;
         }
     }
 
-    // return earliestTimeToJump;
-    console.log(earliestTimeToJump);
-}
+    return -1;
 
-solution(5, [1, 3, 1, 4, 2, 3, 5, 4]);
+}
